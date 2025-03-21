@@ -91,7 +91,7 @@ flutter:
 
 flutter_native_splash:
   color: "#3C4C9D"
-  image: lib/assets/image/logo1.png
+  image: lib\assets\image\logo1.png
   android_gravity: center
   ios_content_mode: scaleAspectFit
   android: true

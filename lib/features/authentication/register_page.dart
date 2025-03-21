@@ -36,7 +36,7 @@ class _RegisterPageState extends State<RegisterPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'assets/images/logo1.png',
+                'lib\assets\image\logo1.png',
                 height: size.height * 0.18,
               ),
               SizedBox(height: 24),

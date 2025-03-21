@@ -26,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/image/logo1.png', height: size.height * 0.2),
+              Image.asset('lib\assets\image\logo1.png', height: size.height * 0.2),
               SizedBox(height: 24),
               TextField(
                 controller: _usernameController,

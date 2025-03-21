@@ -41,7 +41,7 @@ class GetStartedPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/image/logo1.png', height: size.height * 0.25),
+              Image.asset('lib\assets\image\logo1.png', height: size.height * 0.25),
               SizedBox(height: 24),
               Text(
                 'Selamat Datang di Kwizzle',
