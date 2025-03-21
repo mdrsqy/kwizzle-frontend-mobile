@@ -22,60 +22,89 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
-      backgroundColor: Color(0xFF3C4C9D),
       appBar: AppBar(
         title: Text("Registrasi"),
         backgroundColor: Color(0xFF283466),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _nameController,
-              decoration: InputDecoration(labelText: 'Nama'),
-            ),
-            TextField(
-              controller: _usernameController,
-              decoration: InputDecoration(labelText: 'Username'),
-            ),
-            TextField(
-              controller: _emailController,
-              decoration: InputDecoration(labelText: 'Email'),
-            ),
-            TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
-              obscureText: true,
-            ),
-            TextField(
-              controller: _profileController,
-              decoration: InputDecoration(labelText: 'URL Profil'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _register,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF283466),
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset('assets/images/logo.png', height: size.height * 0.18),
+              SizedBox(height: 24),
+              TextField(
+                controller: _nameController,
+                decoration: InputDecoration(
+                  labelText: 'Nama Lengkap',
+                  border: OutlineInputBorder(),
+                ),
               ),
-              child: Text(
-                'Daftar',
-                style: TextStyle(color: Colors.white, fontSize: 18),
+              SizedBox(height: 12),
+              TextField(
+                controller: _usernameController,
+                decoration: InputDecoration(
+                  labelText: 'Username',
+                  border: OutlineInputBorder(),
+                ),
               ),
-            ),
-            SizedBox(height: 10),
-            TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/login');
-              },
-              child: Text(
-                "Sudah punya akun? Masuk di sini.",
-                style: TextStyle(color: Colors.white),
+              SizedBox(height: 12),
+              TextField(
+                controller: _emailController,
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                  border: OutlineInputBorder(),
+                ),
               ),
-            ),
-          ],
+              SizedBox(height: 12),
+              TextField(
+                controller: _passwordController,
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  border: OutlineInputBorder(),
+                ),
+                obscureText: true,
+              ),
+              SizedBox(height: 12),
+              TextField(
+                controller: _profileController,
+                decoration: InputDecoration(
+                  labelText: 'URL Profil',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: _register,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF1EB8D1),
+                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 14),
+                  minimumSize: Size(double.infinity, 48),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: Text(
+                  'Daftar',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+              ),
+              SizedBox(height: 16),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/login');
+                },
+                child: Text(
+                  "Sudah punya akun? Masuk di sini.",
+                  style: TextStyle(color: Color(0xFF283466)),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
