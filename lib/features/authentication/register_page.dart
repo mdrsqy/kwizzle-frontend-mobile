@@ -53,7 +53,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   color: Color(0xFF493D9E), // Unique welcoming message color
                 ),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 16), // Increased space between text and form
               Text(
                 'Let’s get you started on a fun quiz journey.',
                 style: TextStyle(
@@ -61,7 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   color: Color(0xFF6C63FF), // Color matching the palette
                 ),
               ),
-              SizedBox(height: 24),
+              SizedBox(height: 40), // Increased space before form fields
               _buildTextField(controller: _nameController, label: 'Full Name'),
               SizedBox(height: 12),
               _buildTextField(
@@ -138,7 +138,7 @@ class _RegisterPageState extends State<RegisterPage> {
       obscureText: obscureText,
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: TextStyle(color: Color(0xFF6C63FF)), // Updated label color
+        labelStyle: TextStyle(color: Colors.black), // Keep label text black
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: Color(0xFF6C63FF),
