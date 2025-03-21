@@ -15,8 +15,8 @@ class KwizzleApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.light(
-          primary: Color(0xFF283466), // Dark Blue Color
-          secondary: Color(0xFF1EB8D1), // Lighter Blue for accent
+          primary: Color(0xFF6C63FF), // Updated color (RGB: 108, 99, 255)
+          secondary: Color(0xFF6C63FF), // Updated color for accent as well
         ),
         scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Roboto',
@@ -62,19 +62,19 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 children: [
                   _buildOnboardingPage(
                     image:
-                        'lib/assets/image/logo1.svg', // Path to your SVG logo
+                        'lib/assets/image/started/1', // Path to your SVG logo
                     title:
                         'Create, share and play quizzes\nwhenever and wherever you want',
                   ),
                   _buildOnboardingPage(
                     image:
-                        'lib/assets/image/logo1.svg', // Path to your SVG logo
+                        'lib/assets/image/started/2', // Path to your SVG logo
                     title:
                         'Find fun and interesting quizzes\nto boost up your knowledge',
                   ),
                   _buildOnboardingPage(
                     image:
-                        'lib/assets/image/logo1.svg', // Path to your SVG logo
+                        'lib/assets/image/started/3', // Path to your SVG logo
                     title:
                         'Play and take quiz challenges\ntogether with your friends',
                   ),
@@ -101,7 +101,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
-            color: Color(0xFF283466),
+            color: Color.fromARGB(255, 0, 0, 0), // Text color unchanged
           ),
         ),
       ],
@@ -127,7 +127,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       decoration: BoxDecoration(
         color:
             pageIndex == _currentPage
-                ? Color(0xFF283466) // Accent color
+                ? Color(0xFF6C63FF) // Updated color (RGB: 108, 99, 255)
                 : Colors.grey,
         borderRadius: BorderRadius.circular(12),
       ),
@@ -144,12 +144,15 @@ class _OnboardingPageState extends State<OnboardingPage> {
               Navigator.pushNamed(context, '/register');
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFF283466), // Dark Blue for the button
+              backgroundColor: Color(
+                0xFF6C63FF,
+              ), // Updated color for the button
               padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
               minimumSize: Size(double.infinity, 48),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12), // Added border radius
               ),
+              shadowColor: Color(0xFFDAD2FF), // Light gradient color
             ),
             child: Text(
               'Get Started',
@@ -168,7 +171,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             child: Text(
               'I Already Have an Account',
               style: TextStyle(
-                color: Color(0xFF283466), // Dark Blue for text
+                color: Color(0xFF493D9E), // Text color unchanged
                 fontSize: 16,
               ),
             ),
