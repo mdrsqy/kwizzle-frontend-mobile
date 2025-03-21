@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'features/authentication/register_page.dart';
 import 'features/authentication/login_page.dart';
+
+void main() {
+  runApp(KwizzleApp());
+}
 
 class KwizzleApp extends StatelessWidget {
   @override
@@ -37,7 +42,10 @@ class GetStartedPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/image/logo1.svg', height: size.height * 0.25),
+              SvgPicture.asset(
+                'lib/assets/image/logo1.svg', // Ganti dengan path logo SVG kamu
+                height: size.height * 0.25,
+              ),
               SizedBox(height: 24),
               Text(
                 'Selamat Datang di Kwizzle',
@@ -84,8 +92,8 @@ class GetStartedPage extends StatelessWidget {
                 style: OutlinedButton.styleFrom(
                   side: BorderSide(
                     width: 2.0,
-                    color: Colors.transparent,
-                    style: BorderStyle.solid, // Garis tepi transparan
+                    color: Color(0xFF1EB8D1), // Warna border utama
+                    style: BorderStyle.solid, // Garis putus-putus
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                   shape: RoundedRectangleBorder(
@@ -107,7 +115,7 @@ class GetStartedPage extends StatelessWidget {
                       'Masuk',
                       style: TextStyle(
                         fontSize: 18,
-                        color: Colors.blue,
+                        color: Color(0xFF283466),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
