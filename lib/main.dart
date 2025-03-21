@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'features/authentication/register_page.dart';
 import 'features/authentication/login_page.dart';
 
-void main() {
-  runApp(KwizzleApp());
-}
-
 class KwizzleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -41,7 +37,7 @@ class GetStartedPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('lib/assets/image/logo1.png', height: size.height * 0.25),
+              Image.asset('assets/image/logo1.svg', height: size.height * 0.25),
               SizedBox(height: 24),
               Text(
                 'Selamat Datang di Kwizzle',
@@ -65,7 +61,7 @@ class GetStartedPage extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF1EB8D1),
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
                   minimumSize: Size(double.infinity, 48),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -77,6 +73,44 @@ class GetStartedPage extends StatelessWidget {
                     color: Colors.white,
                     fontSize: 18,
                     letterSpacing: 0.5,
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              OutlinedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/login');
+                },
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(
+                    width: 2.0,
+                    color: Colors.transparent,
+                    style: BorderStyle.solid, // Garis tepi transparan
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  backgroundColor: Colors.white, // Background transparan
+                ),
+                child: Ink(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      width: 3,
+                      color: Color(0xFF1EB8D1), // Warna border utama
+                    ),
+                  ),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                    child: Text(
+                      'Masuk',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
               ),
