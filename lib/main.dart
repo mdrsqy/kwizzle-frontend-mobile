@@ -62,19 +62,19 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 children: [
                   _buildOnboardingPage(
                     image:
-                        'lib/assets/image/started/1', // Path to your SVG logo
+                        'lib/assets/image/started/1.svg', // Path to your SVG logo
                     title:
                         'Create, share and play quizzes\nwhenever and wherever you want',
                   ),
                   _buildOnboardingPage(
                     image:
-                        'lib/assets/image/started/2', // Path to your SVG logo
+                        'lib/assets/image/started/2.svg', // Path to your SVG logo
                     title:
                         'Find fun and interesting quizzes\nto boost up your knowledge',
                   ),
                   _buildOnboardingPage(
                     image:
-                        'lib/assets/image/started/3', // Path to your SVG logo
+                        'lib/assets/image/started/3.svg', // Path to your SVG logo
                     title:
                         'Play and take quiz challenges\ntogether with your friends',
                   ),
