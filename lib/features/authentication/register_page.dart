@@ -35,7 +35,10 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/images/logo.png', height: size.height * 0.18),
+              Image.asset(
+                'assets/images/logo1.png',
+                height: size.height * 0.18,
+              ),
               SizedBox(height: 24),
               TextField(
                 controller: _nameController,
