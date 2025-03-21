@@ -10,14 +10,14 @@ class _RegisterPageState extends State<RegisterPage> {
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _profileController = TextEditingController();
+
+  bool _isPasswordVisible = false; // Track the visibility of the password
 
   void _register() {
     print('Nama: ${_nameController.text}');
     print('Username: ${_usernameController.text}');
     print('Email: ${_emailController.text}');
     print('Password: ${_passwordController.text}');
-    print('Profile: ${_profileController.text}');
   }
 
   @override
@@ -26,8 +26,14 @@ class _RegisterPageState extends State<RegisterPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Registrasi"),
-        backgroundColor: Color(0xFF283466),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Color(0xFF283466)),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -35,16 +41,30 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                'lib/assets/image/logo1.png',
-                height: size.height * 0.18,
+              // Removed the image/logo
+              SizedBox(height: 24),
+              Text(
+                'Create an Account',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF283466),
+                ),
               ),
               SizedBox(height: 24),
               TextField(
                 controller: _nameController,
                 decoration: InputDecoration(
-                  labelText: 'Nama Lengkap',
-                  border: OutlineInputBorder(),
+                  labelText: 'Full Name',
+                  labelStyle: TextStyle(color: Color(0xFF283466)),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFF283466)),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(
+                      12,
+                    ), // Added rounded corners
+                  ),
                 ),
               ),
               SizedBox(height: 12),
@@ -52,7 +72,15 @@ class _RegisterPageState extends State<RegisterPage> {
                 controller: _usernameController,
                 decoration: InputDecoration(
                   labelText: 'Username',
-                  border: OutlineInputBorder(),
+                  labelStyle: TextStyle(color: Color(0xFF283466)),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFF283466)),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(
+                      12,
+                    ), // Added rounded corners
+                  ),
                 ),
               ),
               SizedBox(height: 12),
@@ -60,7 +88,15 @@ class _RegisterPageState extends State<RegisterPage> {
                 controller: _emailController,
                 decoration: InputDecoration(
                   labelText: 'Email',
-                  border: OutlineInputBorder(),
+                  labelStyle: TextStyle(color: Color(0xFF283466)),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFF283466)),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(
+                      12,
+                    ), // Added rounded corners
+                  ),
                 ),
               ),
               SizedBox(height: 12),
@@ -68,23 +104,36 @@ class _RegisterPageState extends State<RegisterPage> {
                 controller: _passwordController,
                 decoration: InputDecoration(
                   labelText: 'Password',
-                  border: OutlineInputBorder(),
+                  labelStyle: TextStyle(color: Color(0xFF283466)),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFF283466)),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(
+                      12,
+                    ), // Added rounded corners
+                  ),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _isPasswordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                      color: Color(0xFF283466),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isPasswordVisible = !_isPasswordVisible;
+                      });
+                    },
+                  ),
                 ),
-                obscureText: true,
-              ),
-              SizedBox(height: 12),
-              TextField(
-                controller: _profileController,
-                decoration: InputDecoration(
-                  labelText: 'URL Profil',
-                  border: OutlineInputBorder(),
-                ),
+                obscureText: !_isPasswordVisible, // Toggle password visibility
               ),
               SizedBox(height: 24),
               ElevatedButton(
                 onPressed: _register,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF1EB8D1),
+                  backgroundColor: Color(0xFF283466),
                   padding: EdgeInsets.symmetric(horizontal: 40, vertical: 14),
                   minimumSize: Size(double.infinity, 48),
                   shape: RoundedRectangleBorder(
@@ -92,7 +141,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 child: Text(
-                  'Daftar',
+                  'Sign Up',
                   style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
               ),
@@ -102,7 +151,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   Navigator.pushNamed(context, '/login');
                 },
                 child: Text(
-                  "Sudah punya akun? Masuk di sini.",
+                  "Already have an account? Sign In.",
                   style: TextStyle(color: Color(0xFF283466)),
                 ),
               ),
