@@ -9,6 +9,8 @@ class _LoginPageState extends State<LoginPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  bool _isPasswordVisible = false; // Track the visibility of the password
+
   void _login() {
     print('Username: ${_usernameController.text}');
     print('Password: ${_passwordController.text}');
@@ -19,36 +21,81 @@ class _LoginPageState extends State<LoginPage> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(title: Text("Masuk"), backgroundColor: Color(0xFF283466)),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Color(0xFF283466)),
+          onPressed: () {
+            Navigator.pop(context); // Go back to the previous screen
+          },
+        ),
+      ),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('lib/assets/image/logo1.png', height: size.height * 0.2),
               SizedBox(height: 24),
+              Text(
+                'Log In',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF283466),
+                ),
+              ),
+              SizedBox(height: 24),
+              // Username Field
               TextField(
                 controller: _usernameController,
                 decoration: InputDecoration(
                   labelText: 'Username',
-                  border: OutlineInputBorder(),
+                  labelStyle: TextStyle(color: Color(0xFF283466)),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFF283466)),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 12),
+              // Password Field
               TextField(
                 controller: _passwordController,
                 decoration: InputDecoration(
                   labelText: 'Password',
-                  border: OutlineInputBorder(),
+                  labelStyle: TextStyle(color: Color(0xFF283466)),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFF283466)),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _isPasswordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                      color: Color(0xFF283466),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isPasswordVisible = !_isPasswordVisible;
+                      });
+                    },
+                  ),
                 ),
-                obscureText: true,
+                obscureText: !_isPasswordVisible, // Toggle password visibility
               ),
               SizedBox(height: 24),
+              // Login Button
               ElevatedButton(
                 onPressed: _login,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF1EB8D1),
+                  backgroundColor: Color(0xFF283466),
                   padding: EdgeInsets.symmetric(horizontal: 40, vertical: 14),
                   minimumSize: Size(double.infinity, 48),
                   shape: RoundedRectangleBorder(
@@ -56,17 +103,18 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 child: Text(
-                  'Masuk',
+                  'Log In',
                   style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
               ),
               SizedBox(height: 16),
+              // Sign Up Link
               TextButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/register');
                 },
                 child: Text(
-                  "Belum punya akun? Daftar di sini.",
+                  "Don't have an account? Sign up here.",
                   style: TextStyle(color: Color(0xFF283466)),
                 ),
               ),
