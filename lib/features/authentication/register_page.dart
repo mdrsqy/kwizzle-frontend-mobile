@@ -14,7 +14,7 @@ class _RegisterPageState extends State<RegisterPage> {
   bool _isPasswordVisible = false; // Track the visibility of the password
 
   void _register() {
-    print('Nama: ${_nameController.text}');
+    print('Name: ${_nameController.text}');
     print('Username: ${_usernameController.text}');
     print('Email: ${_emailController.text}');
     print('Password: ${_passwordController.text}');
@@ -29,7 +29,10 @@ class _RegisterPageState extends State<RegisterPage> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Color(0xFF283466)),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color(0xFF6C63FF),
+          ), // Updated to match new color palette
           onPressed: () {
             Navigator.pop(context);
           },
@@ -41,103 +44,62 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Removed the image/logo
               SizedBox(height: 24),
               Text(
-                'Create an Account',
+                'Welcome to Kwizzle!',
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF283466),
+                  color: Color(0xFF493D9E), // Unique welcoming message color
+                ),
+              ),
+              SizedBox(height: 10),
+              Text(
+                'Let’s get you started on a fun quiz journey.',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Color(0xFF6C63FF), // Color matching the palette
                 ),
               ),
               SizedBox(height: 24),
-              TextField(
-                controller: _nameController,
-                decoration: InputDecoration(
-                  labelText: 'Full Name',
-                  labelStyle: TextStyle(color: Color(0xFF283466)),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFF283466)),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                      12,
-                    ), // Added rounded corners
-                  ),
-                ),
-              ),
+              _buildTextField(controller: _nameController, label: 'Full Name'),
               SizedBox(height: 12),
-              TextField(
+              _buildTextField(
                 controller: _usernameController,
-                decoration: InputDecoration(
-                  labelText: 'Username',
-                  labelStyle: TextStyle(color: Color(0xFF283466)),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFF283466)),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                      12,
-                    ), // Added rounded corners
-                  ),
-                ),
+                label: 'Username',
               ),
               SizedBox(height: 12),
-              TextField(
-                controller: _emailController,
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  labelStyle: TextStyle(color: Color(0xFF283466)),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFF283466)),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                      12,
-                    ), // Added rounded corners
-                  ),
-                ),
-              ),
+              _buildTextField(controller: _emailController, label: 'Email'),
               SizedBox(height: 12),
-              TextField(
+              _buildTextField(
                 controller: _passwordController,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  labelStyle: TextStyle(color: Color(0xFF283466)),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFF283466)),
+                label: 'Password',
+                obscureText: !_isPasswordVisible,
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _isPasswordVisible
+                        ? Icons.visibility
+                        : Icons.visibility_off,
+                    color: Color(0xFF6C63FF), // Updated icon color
                   ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                      12,
-                    ), // Added rounded corners
-                  ),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _isPasswordVisible
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                      color: Color(0xFF283466),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _isPasswordVisible = !_isPasswordVisible;
-                      });
-                    },
-                  ),
+                  onPressed: () {
+                    setState(() {
+                      _isPasswordVisible = !_isPasswordVisible;
+                    });
+                  },
                 ),
-                obscureText: !_isPasswordVisible, // Toggle password visibility
               ),
               SizedBox(height: 24),
               ElevatedButton(
                 onPressed: _register,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF283466),
+                  backgroundColor: Color(
+                    0xFF6C63FF,
+                  ), // Updated to match new color palette
                   padding: EdgeInsets.symmetric(horizontal: 40, vertical: 14),
                   minimumSize: Size(double.infinity, 48),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(12),
                   ),
                 ),
                 child: Text(
@@ -152,12 +114,40 @@ class _RegisterPageState extends State<RegisterPage> {
                 },
                 child: Text(
                   "Already have an account? Sign In.",
-                  style: TextStyle(color: Color(0xFF283466)),
+                  style: TextStyle(
+                    color: Color(0xFF6C63FF),
+                  ), // Updated to match new color palette
                 ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  // Reusable method for building text fields
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    bool obscureText = false,
+    Widget? suffixIcon,
+  }) {
+    return TextField(
+      controller: controller,
+      obscureText: obscureText,
+      decoration: InputDecoration(
+        labelText: label,
+        labelStyle: TextStyle(color: Color(0xFF6C63FF)), // Updated label color
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xFF6C63FF),
+          ), // Updated focused border color
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12), // Rounded corners
+        ),
+        suffixIcon: suffixIcon,
       ),
     );
   }
