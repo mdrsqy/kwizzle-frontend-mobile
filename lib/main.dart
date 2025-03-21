@@ -37,6 +37,13 @@ class OnboardingPage extends StatefulWidget {
 
 class _OnboardingPageState extends State<OnboardingPage> {
   final PageController _pageController = PageController();
+  int _currentPage = 0; // Track the current page index
+
+  @override
+  void dispose() {
+    _pageController.dispose(); // Dispose the controller when done
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,19 +54,27 @@ class _OnboardingPageState extends State<OnboardingPage> {
             Expanded(
               child: PageView(
                 controller: _pageController,
+                onPageChanged: (int index) {
+                  setState(() {
+                    _currentPage = index; // Update current page when swiped
+                  });
+                },
                 children: [
                   _buildOnboardingPage(
-                    image: 'assets/image/logo1.svg', // Path to your SVG logo
+                    image:
+                        'lib/assets/image/logo1.svg', // Path to your SVG logo
                     title:
                         'Create, share and play quizzes\nwhenever and wherever you want',
                   ),
                   _buildOnboardingPage(
-                    image: 'assets/image/logo1.svg', // Path to your SVG logo
+                    image:
+                        'lib/assets/image/logo1.svg', // Path to your SVG logo
                     title:
                         'Find fun and interesting quizzes\nto boost up your knowledge',
                   ),
                   _buildOnboardingPage(
-                    image: 'assets/image/logo1.svg', // Path to your SVG logo
+                    image:
+                        'lib/assets/image/logo1.svg', // Path to your SVG logo
                     title:
                         'Play and take quiz challenges\ntogether with your friends',
                   ),
@@ -108,12 +123,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
       duration: Duration(milliseconds: 300),
       margin: EdgeInsets.symmetric(horizontal: 5),
       height: 8,
-      width: pageIndex == _pageController.page?.round() ? 24 : 8,
+      width: pageIndex == _currentPage ? 24 : 8,
       decoration: BoxDecoration(
-        color:
-            pageIndex == _pageController.page?.round()
-                ? Color(0xFF1EB8D1)
-                : Colors.grey,
+        color: pageIndex == _currentPage ? Color(0xFF1EB8D1) : Colors.grey,
         borderRadius: BorderRadius.circular(12),
       ),
     );
