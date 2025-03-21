@@ -21,7 +21,7 @@ class KwizzleApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Roboto',
       ),
-      home: GetStartedPage(),
+      home: OnboardingPage(),
       routes: {
         '/register': (context) => RegisterPage(),
         '/login': (context) => LoginPage(),
@@ -30,101 +30,132 @@ class KwizzleApp extends StatelessWidget {
   }
 }
 
-class GetStartedPage extends StatelessWidget {
+class OnboardingPage extends StatefulWidget {
+  @override
+  _OnboardingPageState createState() => _OnboardingPageState();
+}
+
+class _OnboardingPageState extends State<OnboardingPage> {
+  final PageController _pageController = PageController();
+
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                'lib/assets/image/logo1.svg', // Ganti dengan path logo SVG kamu
-                height: size.height * 0.25,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: PageView(
+                controller: _pageController,
+                children: [
+                  _buildOnboardingPage(
+                    image: 'assets/image/logo1.svg', // Path to your SVG logo
+                    title:
+                        'Create, share and play quizzes\nwhenever and wherever you want',
+                  ),
+                  _buildOnboardingPage(
+                    image: 'assets/image/logo1.svg', // Path to your SVG logo
+                    title:
+                        'Find fun and interesting quizzes\nto boost up your knowledge',
+                  ),
+                  _buildOnboardingPage(
+                    image: 'assets/image/logo1.svg', // Path to your SVG logo
+                    title:
+                        'Play and take quiz challenges\ntogether with your friends',
+                  ),
+                ],
               ),
-              SizedBox(height: 24),
-              Text(
-                'Selamat Datang di Kwizzle',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF283466),
-                ),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 12),
-              Text(
-                'Platform kuis & autentikasi pengguna modern.',
-                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 36),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/register');
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF1EB8D1),
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
-                  minimumSize: Size(double.infinity, 48),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: Text(
-                  'Mulai Sekarang',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    letterSpacing: 0.5,
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
-              OutlinedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/login');
-                },
-                style: OutlinedButton.styleFrom(
-                  side: BorderSide(
-                    width: 2.0,
-                    color: Color(0xFF1EB8D1), // Warna border utama
-                    style: BorderStyle.solid, // Garis putus-putus
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  backgroundColor: Colors.white, // Background transparan
-                ),
-                child: Ink(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      width: 3,
-                      color: Color(0xFF1EB8D1), // Warna border utama
-                    ),
-                  ),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                    child: Text(
-                      'Masuk',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Color(0xFF283466),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
+            ),
+            _buildPageIndicator(),
+            _buildButtons(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOnboardingPage({required String image, required String title}) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SvgPicture.asset(image, height: 200),
+        SizedBox(height: 24),
+        Text(
+          title,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF283466),
           ),
         ),
+      ],
+    );
+  }
+
+  Widget _buildPageIndicator() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [_buildIndicator(0), _buildIndicator(1), _buildIndicator(2)],
+      ),
+    );
+  }
+
+  Widget _buildIndicator(int pageIndex) {
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 300),
+      margin: EdgeInsets.symmetric(horizontal: 5),
+      height: 8,
+      width: pageIndex == _pageController.page?.round() ? 24 : 8,
+      decoration: BoxDecoration(
+        color:
+            pageIndex == _pageController.page?.round()
+                ? Color(0xFF1EB8D1)
+                : Colors.grey,
+        borderRadius: BorderRadius.circular(12),
+      ),
+    );
+  }
+
+  Widget _buildButtons() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/register');
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xFF1EB8D1),
+              padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+              minimumSize: Size(double.infinity, 48),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+            child: Text(
+              'Get Started',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                letterSpacing: 0.5,
+              ),
+            ),
+          ),
+          SizedBox(height: 10),
+          TextButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/login');
+            },
+            child: Text(
+              'I Already Have an Account',
+              style: TextStyle(color: Color(0xFF283466), fontSize: 16),
+            ),
+          ),
+        ],
       ),
     );
   }
