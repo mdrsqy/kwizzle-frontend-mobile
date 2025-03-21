@@ -15,8 +15,8 @@ class KwizzleApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.light(
-          primary: Color(0xFF1EB8D1),
-          secondary: Color(0xFF283466),
+          primary: Color(0xFF283466), // Dark Blue Color
+          secondary: Color(0xFF1EB8D1), // Lighter Blue for accent
         ),
         scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Roboto',
@@ -61,17 +61,20 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 },
                 children: [
                   _buildOnboardingPage(
-                    image: 'lib/assets/image/logo1.svg',
+                    image:
+                        'lib/assets/image/logo1.svg', // Path to your SVG logo
                     title:
                         'Create, share and play quizzes\nwhenever and wherever you want',
                   ),
                   _buildOnboardingPage(
-                    image: 'assets/image/logo1.svg',
+                    image:
+                        'lib/assets/image/logo1.svg', // Path to your SVG logo
                     title:
                         'Find fun and interesting quizzes\nto boost up your knowledge',
                   ),
                   _buildOnboardingPage(
-                    image: 'assets/image/logo1.svg',
+                    image:
+                        'lib/assets/image/logo1.svg', // Path to your SVG logo
                     title:
                         'Play and take quiz challenges\ntogether with your friends',
                   ),
@@ -122,7 +125,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
       height: 8,
       width: pageIndex == _currentPage ? 24 : 8,
       decoration: BoxDecoration(
-        color: pageIndex == _currentPage ? Color(0xFF1EB8D1) : Colors.grey,
+        color:
+            pageIndex == _currentPage
+                ? Color(0xFF283466) // Accent color
+                : Colors.grey,
         borderRadius: BorderRadius.circular(12),
       ),
     );
@@ -138,7 +144,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               Navigator.pushNamed(context, '/register');
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFF007B8D), // Darker color for button
+              backgroundColor: Color(0xFF283466), // Dark Blue for the button
               padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
               minimumSize: Size(double.infinity, 48),
               shape: RoundedRectangleBorder(
@@ -162,7 +168,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             child: Text(
               'I Already Have an Account',
               style: TextStyle(
-                color: Color(0xFF007B8D), // Darker color for the text
+                color: Color(0xFF283466), // Dark Blue for text
                 fontSize: 16,
               ),
             ),
