@@ -18,14 +18,17 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    // final size = MediaQuery.of(context).size;
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Color(0xFF283466)),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color(0xFF6C63FF),
+          ), // Updated to match new color palette
           onPressed: () {
             Navigator.pop(context); // Go back to the previous screen
           },
@@ -38,68 +41,62 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(height: 24),
+              // Welcome Back Text
               Text(
-                'Log In',
+                'Welcome Back!',
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF283466),
+                  color: Colors.black, // Font color is set to black
+                ),
+              ),
+              SizedBox(height: 8),
+              Text(
+                'Please log in to continue your quiz journey.',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black, // Font color is set to black
                 ),
               ),
               SizedBox(height: 24),
               // Username Field
-              TextField(
+              _buildTextField(
                 controller: _usernameController,
-                decoration: InputDecoration(
-                  labelText: 'Username',
-                  labelStyle: TextStyle(color: Color(0xFF283466)),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFF283466)),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
+                label: 'Username',
+                obscureText: false,
               ),
               SizedBox(height: 12),
               // Password Field
-              TextField(
+              _buildTextField(
                 controller: _passwordController,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  labelStyle: TextStyle(color: Color(0xFF283466)),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFF283466)),
+                label: 'Password',
+                obscureText: !_isPasswordVisible,
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _isPasswordVisible
+                        ? Icons.visibility
+                        : Icons.visibility_off,
+                    color: Color(0xFF6C63FF), // Updated icon color
                   ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _isPasswordVisible
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                      color: Color(0xFF283466),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _isPasswordVisible = !_isPasswordVisible;
-                      });
-                    },
-                  ),
+                  onPressed: () {
+                    setState(() {
+                      _isPasswordVisible = !_isPasswordVisible;
+                    });
+                  },
                 ),
-                obscureText: !_isPasswordVisible, // Toggle password visibility
               ),
               SizedBox(height: 24),
               // Login Button
               ElevatedButton(
                 onPressed: _login,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF283466),
+                  backgroundColor: Color(
+                    0xFF6C63FF,
+                  ), // Updated color for the button
                   padding: EdgeInsets.symmetric(horizontal: 40, vertical: 14),
                   minimumSize: Size(double.infinity, 48),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(12),
                   ),
                 ),
                 child: Text(
@@ -115,12 +112,38 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 child: Text(
                   "Don't have an account? Sign up here.",
-                  style: TextStyle(color: Color(0xFF283466)),
+                  style: TextStyle(color: Color(0xFF6C63FF)),
                 ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  // Reusable method for building text fields
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    bool obscureText = false,
+    Widget? suffixIcon,
+  }) {
+    return TextField(
+      controller: controller,
+      obscureText: obscureText,
+      decoration: InputDecoration(
+        labelText: label,
+        labelStyle: TextStyle(color: Colors.black), // Keep label text black
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xFF6C63FF),
+          ), // Updated focused border color
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12), // Rounded corners
+        ),
+        suffixIcon: suffixIcon,
       ),
     );
   }
