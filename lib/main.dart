@@ -37,11 +37,11 @@ class OnboardingPage extends StatefulWidget {
 
 class _OnboardingPageState extends State<OnboardingPage> {
   final PageController _pageController = PageController();
-  int _currentPage = 0; // Track the current page index
+  int _currentPage = 0;
 
   @override
   void dispose() {
-    _pageController.dispose(); // Dispose the controller when done
+    _pageController.dispose();
     super.dispose();
   }
 
@@ -56,25 +56,22 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 controller: _pageController,
                 onPageChanged: (int index) {
                   setState(() {
-                    _currentPage = index; // Update current page when swiped
+                    _currentPage = index;
                   });
                 },
                 children: [
                   _buildOnboardingPage(
-                    image:
-                        'lib/assets/image/logo1.svg', // Path to your SVG logo
+                    image: 'lib/assets/image/logo1.svg',
                     title:
                         'Create, share and play quizzes\nwhenever and wherever you want',
                   ),
                   _buildOnboardingPage(
-                    image:
-                        'lib/assets/image/logo1.svg', // Path to your SVG logo
+                    image: 'assets/image/logo1.svg',
                     title:
                         'Find fun and interesting quizzes\nto boost up your knowledge',
                   ),
                   _buildOnboardingPage(
-                    image:
-                        'lib/assets/image/logo1.svg', // Path to your SVG logo
+                    image: 'assets/image/logo1.svg',
                     title:
                         'Play and take quiz challenges\ntogether with your friends',
                   ),
@@ -141,7 +138,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               Navigator.pushNamed(context, '/register');
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFF1EB8D1),
+              backgroundColor: Color(0xFF007B8D), // Darker color for button
               padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
               minimumSize: Size(double.infinity, 48),
               shape: RoundedRectangleBorder(
@@ -164,7 +161,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
             },
             child: Text(
               'I Already Have an Account',
-              style: TextStyle(color: Color(0xFF283466), fontSize: 16),
+              style: TextStyle(
+                color: Color(0xFF007B8D), // Darker color for the text
+                fontSize: 16,
+              ),
             ),
           ),
         ],
