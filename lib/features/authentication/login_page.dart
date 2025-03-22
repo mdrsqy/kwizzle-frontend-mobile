@@ -18,19 +18,14 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    // final size = MediaQuery.of(context).size;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Color(0xFF6C63FF),
-          ), // Updated to match new color palette
+          icon: Icon(Icons.arrow_back, color: Color(0xFF6C63FF)),
           onPressed: () {
-            Navigator.pop(context); // Go back to the previous screen
+            Navigator.pop(context);
           },
         ),
       ),
@@ -47,16 +42,13 @@ class _LoginPageState extends State<LoginPage> {
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black, // Font color is set to black
+                  color: Colors.black,
                 ),
               ),
               SizedBox(height: 8),
               Text(
                 'Please log in to continue your quiz journey.',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black, // Font color is set to black
-                ),
+                style: TextStyle(fontSize: 16, color: Color(0xFF6C63FF)),
               ),
               SizedBox(height: 24),
               // Username Field
