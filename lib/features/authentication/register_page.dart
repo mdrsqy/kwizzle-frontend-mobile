@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shared_preferences/shared_preferences.dart'; // Added import
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -23,7 +23,7 @@ class _RegisterPageState extends State<RegisterPage> {
   bool _isPasswordVisible = false;
 
   Future<void> _register() async {
-    final String url = 'http://localhost:8080/api/users/register';
+    final String url = 'http://10.0.2.2:8080/api/users/register';
 
     try {
       final response = await http.post(
@@ -46,35 +46,32 @@ class _RegisterPageState extends State<RegisterPage> {
         final prefs = await SharedPreferences.getInstance();
         prefs.setString('auth_token', token);
 
-        Fluttertoast.showToast(
-          msg: "Registration successful!",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.green,
-          textColor: Colors.white,
-        );
-
+        // Show a stylish success Toast
+        _showCustomToast("Registration successful!", Colors.green);
         Navigator.pushReplacementNamed(context, '/login');
       } else {
         final responseData = json.decode(response.body);
-
-        Fluttertoast.showToast(
-          msg: "Registration failed: ${responseData['pesan']}",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-        );
+        _showCustomToast(responseData['pesan'], Colors.red);
       }
     } catch (error) {
-      Fluttertoast.showToast(
-        msg: "An error occurred. Please try again.",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
+      _showCustomToast(
+        "An error occurred. Please try again. $error",
+        Colors.red,
       );
     }
+  }
+
+  // Custom Toast Notification for modern look
+  void _showCustomToast(String message, Color color) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: color,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
   }
 
   @override
