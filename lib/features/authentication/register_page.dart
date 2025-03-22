@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -33,12 +34,18 @@ class _RegisterPageState extends State<RegisterPage> {
           'username': _usernameController.text,
           'email': _emailController.text,
           'password': _passwordController.text,
+          'role': 'USER',
+          'status': 'ACTIVE',
         }),
       );
 
       if (response.statusCode == 201) {
         final responseData = json.decode(response.body);
-        print('User registered successfully: $responseData');
+        String token = responseData['data']['token'];
+
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setString('auth_token', token);
+
         Fluttertoast.showToast(
           msg: "Registration successful!",
           toastLength: Toast.LENGTH_SHORT,
@@ -50,10 +57,9 @@ class _RegisterPageState extends State<RegisterPage> {
         Navigator.pushReplacementNamed(context, '/login');
       } else {
         final responseData = json.decode(response.body);
-        print('Registration failed: ${responseData['message']}');
 
         Fluttertoast.showToast(
-          msg: "Registration failed: ${responseData['message']}",
+          msg: "Registration failed: ${responseData['pesan']}",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           backgroundColor: Colors.red,
@@ -61,8 +67,6 @@ class _RegisterPageState extends State<RegisterPage> {
         );
       }
     } catch (error) {
-      print('Error during registration: $error');
-
       Fluttertoast.showToast(
         msg: "An error occurred. Please try again.",
         toastLength: Toast.LENGTH_SHORT,
@@ -189,7 +193,6 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  // Reusable method for building text fields
   Widget _buildTextField({
     required TextEditingController controller,
     required String label,
