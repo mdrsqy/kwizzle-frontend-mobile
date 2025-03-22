@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -18,11 +21,58 @@ class _RegisterPageState extends State<RegisterPage> {
 
   bool _isPasswordVisible = false; // Track the visibility of the password
 
-  void _register() {
-    print('Name: ${_nameController.text}');
-    print('Username: ${_usernameController.text}');
-    print('Email: ${_emailController.text}');
-    print('Password: ${_passwordController.text}');
+  // Function to send the registration data to the backend
+  Future<void> _register() async {
+    final String url = 'http://localhost:8080/api/users/register';
+
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'name': _nameController.text,
+          'username': _usernameController.text,
+          'email': _emailController.text,
+          'password': _passwordController.text,
+        }),
+      );
+
+      if (response.statusCode == 201) {
+        final responseData = json.decode(response.body);
+        print('User registered successfully: $responseData');
+        // Show success message
+        Fluttertoast.showToast(
+          msg: "Registration successful!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+        );
+        // Navigate to the login page after successful registration
+        Navigator.pushReplacementNamed(context, '/login');
+      } else {
+        final responseData = json.decode(response.body);
+        print('Registration failed: ${responseData['message']}');
+        // Show error message using Toast
+        Fluttertoast.showToast(
+          msg: "Registration failed: ${responseData['message']}",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+        );
+      }
+    } catch (error) {
+      print('Error during registration: $error');
+      // Show error message using Toast for network or other errors
+      Fluttertoast.showToast(
+        msg: "An error occurred. Please try again.",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
+    }
   }
 
   @override
@@ -36,8 +86,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    // final size = MediaQuery.of(context).size;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
