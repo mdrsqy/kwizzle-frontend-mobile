@@ -19,9 +19,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final _emailFocusNode = FocusNode();
   final _passwordFocusNode = FocusNode();
 
-  bool _isPasswordVisible = false; // Track the visibility of the password
+  bool _isPasswordVisible = false;
 
-  // Function to send the registration data to the backend
   Future<void> _register() async {
     final String url = 'http://localhost:8080/api/users/register';
 
@@ -40,7 +39,6 @@ class _RegisterPageState extends State<RegisterPage> {
       if (response.statusCode == 201) {
         final responseData = json.decode(response.body);
         print('User registered successfully: $responseData');
-        // Show success message
         Fluttertoast.showToast(
           msg: "Registration successful!",
           toastLength: Toast.LENGTH_SHORT,
@@ -48,12 +46,12 @@ class _RegisterPageState extends State<RegisterPage> {
           backgroundColor: Colors.green,
           textColor: Colors.white,
         );
-        // Navigate to the login page after successful registration
+
         Navigator.pushReplacementNamed(context, '/login');
       } else {
         final responseData = json.decode(response.body);
         print('Registration failed: ${responseData['message']}');
-        // Show error message using Toast
+
         Fluttertoast.showToast(
           msg: "Registration failed: ${responseData['message']}",
           toastLength: Toast.LENGTH_SHORT,
@@ -64,7 +62,7 @@ class _RegisterPageState extends State<RegisterPage> {
       }
     } catch (error) {
       print('Error during registration: $error');
-      // Show error message using Toast for network or other errors
+
       Fluttertoast.showToast(
         msg: "An error occurred. Please try again.",
         toastLength: Toast.LENGTH_SHORT,
