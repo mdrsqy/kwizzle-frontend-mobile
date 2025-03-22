@@ -111,6 +111,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  http: ^0.14.0
+  fluttertoast: ^8.0.9
   cupertino_icons: ^1.0.8
   flutter_svg: ^2.0.7
 
