@@ -20,13 +20,28 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.notifications, color: Colors.purple),
-          onPressed: () {},
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 16.0),
+          child: Row(
+            children: [
+              Text(
+                "Kwizzle",
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF6C63FF),
+                ),
+              ),
+            ],
+          ),
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.search, color: Colors.purple),
+            icon: Icon(Icons.notifications, color: Color(0xFF6C63FF)),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: Icon(Icons.search, color: Color(0xFF6C63FF)),
             onPressed: () {},
           ),
         ],
@@ -44,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  color: Colors.purple,
+                  color: Color(0xFF6C63FF),
                 ),
               ),
             ),
@@ -52,7 +67,7 @@ class _HomePageState extends State<HomePage> {
             ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.purple,
+                backgroundColor: Color(0xFF6C63FF),
                 padding: EdgeInsets.symmetric(vertical: 14, horizontal: 30),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -112,6 +127,8 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
+        selectedItemColor: Color(0xFF6C63FF),
+        unselectedItemColor: Colors.grey,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
@@ -132,7 +149,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // Reusable method for building discover cards
   Widget _buildDiscoverCard({
     required String title,
     required String author,
@@ -153,25 +169,24 @@ class _HomePageState extends State<HomePage> {
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
-              color: Colors.purple,
+              color: Color(0xFF6C63FF),
             ),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
           SizedBox(height: 8),
-          Text('By $author', style: TextStyle(color: Colors.purple)),
+          Text('By $author', style: TextStyle(color: Color(0xFF6C63FF))),
           Spacer(),
-          Text('$quizCount Qs', style: TextStyle(color: Colors.purple)),
+          Text('$quizCount Qs', style: TextStyle(color: Color(0xFF6C63FF))),
         ],
       ),
     );
   }
 
-  // Reusable method for building author avatars
   Widget _buildAuthorAvatar(String name) {
     return CircleAvatar(
       radius: 30,
-      backgroundColor: Colors.purple,
+      backgroundColor: Color(0xFF6C63FF),
       child: Text(
         name[0],
         style: TextStyle(
