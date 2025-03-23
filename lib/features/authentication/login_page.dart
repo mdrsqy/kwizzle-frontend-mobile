@@ -11,7 +11,7 @@ class _LoginPageState extends State<LoginPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  bool _isPasswordVisible = false; // Track the visibility of the password
+  bool _isPasswordVisible = false;
 
   Future<void> _login() async {
     if (_usernameController.text.isEmpty) {
