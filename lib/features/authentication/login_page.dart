@@ -55,12 +55,9 @@ class _LoginPageState extends State<LoginPage> {
           prefs.setString('username', username);
           prefs.setString('email', email);
 
-          // Show success SnackBar and navigate to the dashboard
+          // Show success SnackBar and navigate to the home
           _showCustomSnackBar("Login successful!", Colors.green);
-          Navigator.pushReplacementNamed(
-            context,
-            '/dashboard',
-          ); // Navigate to dashboard
+          Navigator.pushReplacementNamed(context, '/home');
         } else {
           _showCustomSnackBar(responseData['pesan'], Colors.red);
         }

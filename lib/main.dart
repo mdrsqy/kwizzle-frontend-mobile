@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'features/authentication/register_page.dart';
 import 'features/authentication/login_page.dart';
-import 'features/dashboard/dashboard_page.dart';
+import 'features/home/home_page.dart';
 
 void main() {
   runApp(KwizzleApp());
@@ -26,7 +26,7 @@ class KwizzleApp extends StatelessWidget {
       routes: {
         '/register': (context) => RegisterPage(),
         '/login': (context) => LoginPage(),
-        '/dashboard': (context) => DashboardPage(),
+        '/home': (context) => HomePage(),
       },
     );
   }
