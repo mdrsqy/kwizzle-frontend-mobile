@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -11,9 +13,66 @@ class _LoginPageState extends State<LoginPage> {
 
   bool _isPasswordVisible = false; // Track the visibility of the password
 
-  void _login() {
-    print('Username: ${_usernameController.text}');
-    print('Password: ${_passwordController.text}');
+  Future<void> _login() async {
+    if (_usernameController.text.isEmpty) {
+      _showCustomSnackBar("Username is required!", Colors.red);
+      return;
+    }
+    if (_passwordController.text.isEmpty) {
+      _showCustomSnackBar("Password is required!", Colors.red);
+      return;
+    }
+
+    final String url = 'http://10.0.2.2:8080/api/users/login';
+
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'username': _usernameController.text,
+          'password': _passwordController.text,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body);
+        String token = responseData['data']['token'];
+
+        // Save the token if needed (e.g., in SharedPreferences)
+        // final prefs = await SharedPreferences.getInstance();
+        // prefs.setString('auth_token', token);
+
+        // Show success SnackBar and navigate to the dashboard
+        _showCustomSnackBar("Login successful!", Colors.green);
+        Navigator.pushReplacementNamed(
+          context,
+          '/dashboard',
+        ); // Navigate to dashboard
+      } else {
+        final responseData = json.decode(response.body);
+        _showCustomSnackBar(responseData['message'], Colors.red);
+      }
+    } catch (error) {
+      _showCustomSnackBar(
+        "An error occurred. Please try again. $error",
+        Colors.red,
+      );
+    }
+  }
+
+  // Custom SnackBar for top of the screen
+  void _showCustomSnackBar(String message, Color color) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message, style: TextStyle(color: Colors.white)),
+        backgroundColor: color,
+        behavior: SnackBarBehavior.floating,
+        margin: EdgeInsets.only(top: 20, left: 20, right: 20),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        duration: Duration(seconds: 3),
+      ),
+    );
   }
 
   @override
@@ -68,7 +127,7 @@ class _LoginPageState extends State<LoginPage> {
                     _isPasswordVisible
                         ? Icons.visibility
                         : Icons.visibility_off,
-                    color: Color(0xFF6C63FF), // Updated icon color
+                    color: Color(0xFF6C63FF),
                   ),
                   onPressed: () {
                     setState(() {
@@ -82,9 +141,7 @@ class _LoginPageState extends State<LoginPage> {
               ElevatedButton(
                 onPressed: _login,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(
-                    0xFF6C63FF,
-                  ), // Updated color for the button
+                  backgroundColor: Color(0xFF6C63FF),
                   padding: EdgeInsets.symmetric(horizontal: 40, vertical: 14),
                   minimumSize: Size(double.infinity, 48),
                   shape: RoundedRectangleBorder(
@@ -126,15 +183,11 @@ class _LoginPageState extends State<LoginPage> {
       obscureText: obscureText,
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: TextStyle(color: Colors.black), // Keep label text black
+        labelStyle: TextStyle(color: Colors.black),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Color(0xFF6C63FF),
-          ), // Updated focused border color
+          borderSide: BorderSide(color: Color(0xFF6C63FF)),
         ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12), // Rounded corners
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         suffixIcon: suffixIcon,
       ),
     );
