@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -23,6 +22,23 @@ class _RegisterPageState extends State<RegisterPage> {
   bool _isPasswordVisible = false;
 
   Future<void> _register() async {
+    if (_nameController.text.isEmpty) {
+      _showCustomSnackBar("Full Name is required!", Colors.red);
+      return;
+    }
+    if (_usernameController.text.isEmpty) {
+      _showCustomSnackBar("Username is required!", Colors.red);
+      return;
+    }
+    if (_emailController.text.isEmpty) {
+      _showCustomSnackBar("Email is required!", Colors.red);
+      return;
+    }
+    if (_passwordController.text.isEmpty) {
+      _showCustomSnackBar("Password is required!", Colors.red);
+      return;
+    }
+
     final String url = 'http://10.0.2.2:8080/api/users/register';
 
     try {
@@ -46,31 +62,32 @@ class _RegisterPageState extends State<RegisterPage> {
         final prefs = await SharedPreferences.getInstance();
         prefs.setString('auth_token', token);
 
-        // Show a stylish success Toast
-        _showCustomToast("Registration successful!", Colors.green);
+        // Show success SnackBar at the top
+        _showCustomSnackBar("Registration successful!", Colors.green);
         Navigator.pushReplacementNamed(context, '/login');
       } else {
         final responseData = json.decode(response.body);
-        _showCustomToast(responseData['pesan'], Colors.red);
+        _showCustomSnackBar(responseData['pesan'], Colors.red);
       }
     } catch (error) {
-      _showCustomToast(
+      _showCustomSnackBar(
         "An error occurred. Please try again. $error",
         Colors.red,
       );
     }
   }
 
-  // Custom Toast Notification for modern look
-  void _showCustomToast(String message, Color color) {
-    Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      timeInSecForIosWeb: 1,
-      backgroundColor: color,
-      textColor: Colors.white,
-      fontSize: 16.0,
+  // Custom SnackBar for top of the screen
+  void _showCustomSnackBar(String message, Color color) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message, style: TextStyle(color: Colors.white)),
+        backgroundColor: color,
+        behavior: SnackBarBehavior.floating,
+        margin: EdgeInsets.only(top: 20, left: 20, right: 20),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        duration: Duration(seconds: 3),
+      ),
     );
   }
 
