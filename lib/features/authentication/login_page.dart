@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -37,18 +38,32 @@ class _LoginPageState extends State<LoginPage> {
 
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
-        String token = responseData['data']['token'];
 
-        // Save the token if needed (e.g., in SharedPreferences)
-        // final prefs = await SharedPreferences.getInstance();
-        // prefs.setString('auth_token', token);
+        if (responseData['sukses']) {
+          // Extract data from the response
+          String token = responseData['data']['token'];
+          int userId = responseData['data']['id'];
+          String name = responseData['data']['name'];
+          String username = responseData['data']['username'];
+          String email = responseData['data']['email'];
 
-        // Show success SnackBar and navigate to the dashboard
-        _showCustomSnackBar("Login successful!", Colors.green);
-        Navigator.pushReplacementNamed(
-          context,
-          '/dashboard',
-        ); // Navigate to dashboard
+          // Save data to SharedPreferences
+          final prefs = await SharedPreferences.getInstance();
+          prefs.setString('auth_token', token);
+          prefs.setInt('user_id', userId);
+          prefs.setString('name', name);
+          prefs.setString('username', username);
+          prefs.setString('email', email);
+
+          // Show success SnackBar and navigate to the dashboard
+          _showCustomSnackBar("Login successful!", Colors.green);
+          Navigator.pushReplacementNamed(
+            context,
+            '/dashboard',
+          ); // Navigate to dashboard
+        } else {
+          _showCustomSnackBar(responseData['pesan'], Colors.red);
+        }
       } else {
         final responseData = json.decode(response.body);
         _showCustomSnackBar(responseData['message'], Colors.red);
