@@ -40,14 +40,20 @@ class _LoginPageState extends State<LoginPage> {
         final responseData = json.decode(response.body);
 
         if (responseData['sukses']) {
-          // Extract data from the response
-          String token = responseData['data']['token'];
-          int userId = responseData['data']['id'];
-          String name = responseData['data']['name'];
-          String username = responseData['data']['username'];
-          String email = responseData['data']['email'];
+          String token = responseData['data']?['token'] ?? '';
+          int userId = responseData['data']?['id'] ?? 0;
+          String name = responseData['data']?['name'] ?? '';
+          String username = responseData['data']?['username'] ?? '';
+          String email = responseData['data']?['email'] ?? '';
 
-          // Save data to SharedPreferences
+          if (token.isEmpty) {
+            _showCustomSnackBar(
+              "Token is missing. Please try again.",
+              Colors.red,
+            );
+            return;
+          }
+
           final prefs = await SharedPreferences.getInstance();
           prefs.setString('auth_token', token);
           prefs.setInt('user_id', userId);
@@ -55,15 +61,17 @@ class _LoginPageState extends State<LoginPage> {
           prefs.setString('username', username);
           prefs.setString('email', email);
 
-          // Show success SnackBar and navigate to the home
           _showCustomSnackBar("Login successful!", Colors.green);
           Navigator.pushReplacementNamed(context, '/home');
         } else {
-          _showCustomSnackBar(responseData['pesan'], Colors.red);
+          // Handle specific error messages for failed login
+          String errorMessage = responseData['pesan'] ?? "Login failed";
+          _showCustomSnackBar(errorMessage, Colors.red);
         }
       } else {
         final responseData = json.decode(response.body);
-        _showCustomSnackBar(responseData['message'], Colors.red);
+        String errorMessage = responseData['pesan'] ?? "Unknown error occurred";
+        _showCustomSnackBar(errorMessage, Colors.red);
       }
     } catch (error) {
       _showCustomSnackBar(
@@ -73,7 +81,6 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  // Custom SnackBar for top of the screen
   void _showCustomSnackBar(String message, Color color) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -107,7 +114,6 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(height: 24),
-              // Welcome Back Text
               Text(
                 'Welcome Back!',
                 style: TextStyle(
@@ -122,14 +128,12 @@ class _LoginPageState extends State<LoginPage> {
                 style: TextStyle(fontSize: 16, color: Color(0xFF6C63FF)),
               ),
               SizedBox(height: 24),
-              // Username Field
               _buildTextField(
                 controller: _usernameController,
                 label: 'Username',
                 obscureText: false,
               ),
               SizedBox(height: 12),
-              // Password Field
               _buildTextField(
                 controller: _passwordController,
                 label: 'Password',
@@ -149,7 +153,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               SizedBox(height: 24),
-              // Login Button
               ElevatedButton(
                 onPressed: _login,
                 style: ElevatedButton.styleFrom(
@@ -166,7 +169,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               SizedBox(height: 16),
-              // Sign Up Link
               TextButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/register');
@@ -183,7 +185,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // Reusable method for building text fields
   Widget _buildTextField({
     required TextEditingController controller,
     required String label,
