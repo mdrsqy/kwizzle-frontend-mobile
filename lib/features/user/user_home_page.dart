@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'profile_page.dart';
+import 'create_page.dart';
+import 'library_page.dart';
 
 class UserHomePage extends StatefulWidget {
   @override
@@ -9,17 +11,31 @@ class UserHomePage extends StatefulWidget {
 class _UserHomePageState extends State<UserHomePage> {
   int _selectedIndex = 0;
 
+  // Function to handle item tapped
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
-    // Navigate to Profile Page when Profile tab is tapped
+
     if (index == 4) {
-      // 4 is the index for 'Profile' tab
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => ProfilePage()),
       );
+    } else if (index == 0) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => UserHomePage()),
+      );
+    } else if (index == 1) {
+      // Library tab
+      // Navigate to Library page (if needed)
+    } else if (index == 2) {
+      // Join tab
+      // Navigate to Join page (if needed)
+    } else if (index == 3) {
+      // Create tab
+      // Navigate to Create page (if needed)
     }
   }
 
@@ -60,7 +76,6 @@ class _UserHomePageState extends State<UserHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header
             Padding(
               padding: const EdgeInsets.only(bottom: 24.0),
               child: Text(
@@ -72,7 +87,6 @@ class _UserHomePageState extends State<UserHomePage> {
                 ),
               ),
             ),
-            // Find Friends Button
             ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
@@ -88,13 +102,11 @@ class _UserHomePageState extends State<UserHomePage> {
               ),
             ),
             SizedBox(height: 32),
-            // Discover Section
             Text(
               'Discover Quizzes',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 12),
-            // Discover Cards
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -114,13 +126,11 @@ class _UserHomePageState extends State<UserHomePage> {
               ),
             ),
             SizedBox(height: 32),
-            // Top Authors Section
             Text(
               'Top Authors',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 12),
-            // Top Authors Profile Circle
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -135,7 +145,7 @@ class _UserHomePageState extends State<UserHomePage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+        onTap: _onItemTapped, // Handles the tap on each item
         selectedItemColor: Color(0xFF6C63FF),
         unselectedItemColor: Colors.grey,
         items: const <BottomNavigationBarItem>[
