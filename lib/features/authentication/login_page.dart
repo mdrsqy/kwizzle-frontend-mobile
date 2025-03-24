@@ -67,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
           _showCustomSnackBar("Login successful!", Colors.green);
 
           // Redirect berdasarkan role
-          if (role == 'admin') {
+          if (role.toLowerCase() == 'admin') {
             Navigator.pushReplacementNamed(
               context,
               '/adminHome',
