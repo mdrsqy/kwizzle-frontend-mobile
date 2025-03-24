@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'profile_page.dart';
 
 class UserHomePage extends StatefulWidget {
   @override
@@ -12,6 +13,14 @@ class _UserHomePageState extends State<UserHomePage> {
     setState(() {
       _selectedIndex = index;
     });
+    // Navigate to Profile Page when Profile tab is tapped
+    if (index == 4) {
+      // 4 is the index for 'Profile' tab
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ProfilePage()),
+      );
+    }
   }
 
   @override
