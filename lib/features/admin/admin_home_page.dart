@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
+class AdminHomePage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _AdminHomePageState createState() => _AdminHomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _AdminHomePageState extends State<AdminHomePage> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -51,11 +51,11 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header
+            // Header for Admin
             Padding(
               padding: const EdgeInsets.only(bottom: 24.0),
               child: Text(
-                'Play quiz together with your friends now!',
+                'Admin Dashboard: Manage quizzes and users.',
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
@@ -63,9 +63,11 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            // Find Friends Button
+            // Admin Specific Buttons
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                // Navigate to Manage Quizzes page
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF6C63FF),
                 padding: EdgeInsets.symmetric(vertical: 14, horizontal: 30),
@@ -74,12 +76,29 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               child: Text(
-                'Find Friends',
+                'Manage Quizzes',
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
+            ),
+            SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                // Navigate to View User Reports page
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF6C63FF),
+                padding: EdgeInsets.symmetric(vertical: 14, horizontal: 30),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: Text(
+                'View User Reports',
                 style: TextStyle(color: Colors.white, fontSize: 16),
               ),
             ),
             SizedBox(height: 32),
-            // Discover Section
+            // Discover Section (Optional for Admin)
             Text(
               'Discover',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -105,7 +124,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             SizedBox(height: 32),
-            // Top Authors Section
+            // Top Authors Section (Optional for Admin)
             Text(
               'Top Authors',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),

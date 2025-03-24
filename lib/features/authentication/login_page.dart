@@ -45,6 +45,8 @@ class _LoginPageState extends State<LoginPage> {
           String name = responseData['data']?['name'] ?? '';
           String username = responseData['data']?['username'] ?? '';
           String email = responseData['data']?['email'] ?? '';
+          String role =
+              responseData['data']?['role'] ?? ''; // Ambil role pengguna
 
           if (token.isEmpty) {
             _showCustomSnackBar(
@@ -60,11 +62,23 @@ class _LoginPageState extends State<LoginPage> {
           prefs.setString('name', name);
           prefs.setString('username', username);
           prefs.setString('email', email);
+          prefs.setString('role', role); // Simpan role di SharedPreferences
 
           _showCustomSnackBar("Login successful!", Colors.green);
-          Navigator.pushReplacementNamed(context, '/home');
+
+          // Redirect berdasarkan role
+          if (role == 'admin') {
+            Navigator.pushReplacementNamed(
+              context,
+              '/adminHome',
+            ); // Halaman admin
+          } else {
+            Navigator.pushReplacementNamed(
+              context,
+              '/userhome',
+            ); // Halaman user
+          }
         } else {
-          // Handle specific error messages for failed login
           String errorMessage = responseData['pesan'] ?? "Login failed";
           _showCustomSnackBar(errorMessage, Colors.red);
         }
